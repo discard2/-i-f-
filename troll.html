@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index.html</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Consolas, monospace;
+    }
+
+    body{
+      background:#020817;
+      color:white;
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+
+    /* TOP BAR */
+    .topbar{
+      height:65px;
+      background:#081120;
+      display:flex;
+      align-items:center;
+      padding:0 15px;
+      border-bottom:2px solid #0ea5e9;
+      flex-shrink:0;
+    }
+
+    .menu{
+      font-size:30px;
+      margin-right:15px;
+      cursor:pointer;
+    }
+
+    .filename{
+      font-size:22px;
+      font-weight:bold;
+      flex:1;
+      color:white;
+    }
+
+    .search{
+      font-size:28px;
+      margin-right:18px;
+      cursor:pointer;
+    }
+
+    .play{
+      font-size:28px;
+      color:#00ff88;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    /* TAB BAR */
+    .tabbar{
+      height:50px;
+      background:#06101f;
+      display:flex;
+      align-items:center;
+      padding:0 15px;
+      border-bottom:1px solid #1e293b;
+      flex-shrink:0;
+    }
+
+    .tab{
+      color:white;
+      font-size:20px;
+    }
+
+    /* CODE AREA */
+    .editor-container{
+      flex:1;
+      display:flex;
+      overflow:hidden;
+      background:#000814;
+    }
+
+    .lines{
+      width:55px;
+      background:#000814;
+      color:#64748b;
+      padding:15px 8px;
+      text-align:right;
+      font-size:22px;
+      line-height:1.6;
+      user-select:none;
+      overflow:hidden;
+    }
+
+    textarea{
+      flex:1;
+      background:#000814;
+      color:#dbeafe;
+      border:none;
+      outline:none;
+      resize:none;
+      padding:15px;
+      font-size:22px;
+      line-height:1.6;
+      white-space:pre;
+    }
+
+    /* PREVIEW */
+    .preview{
+      height:50%;
+      border-top:3px solid #0ea5e9;
+      background:white;
+    }
+
+    iframe{
+      width:100%;
+      height:100%;
+      border:none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP -->
+  <div class="topbar">
+    <div class="menu">☰</div>
+    <div class="filename">🟧 index.html</div>
+    <div class="search">⌕</div>
+    <div class="play" onclick="runCode()">▶</div>
+  </div>
+
+  <!-- TAB -->
+  <div class="tabbar">
+    <div class="tab">🟧 index.html</div>
+  </div>
+
+  <!-- EDITOR -->
+  <div class="editor-container">
+    <div class="lines" id="lineNumbers">1</div>
+
+    <textarea id="code" spellcheck="false"><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello</title>
+</head>
+<body style="background:black;color:lime;text-align:center;">
+  <h1>Hello World 🚀</h1>
+  <p>Lagyan mo ng sariling HTML dito!</p>
+</body>
+</html></textarea>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="preview">
+    <iframe id="output"></iframe>
+  </div>
+
+  <script>
+    const code = document.getElementById("code");
+    const lines = document.getElementById("lineNumbers");
+
+    function updateLines(){
+      const count = code.value.split("\n").length;
+      let nums = "";
+      for(let i=1;i<=count;i++){
+        nums += i + "<br>";
+      }
+      lines.innerHTML = nums;
+    }
+
+    function runCode(){
+      document.getElementById("output").srcdoc = code.value;
+    }
+
+    code.addEventListener("input", updateLines);
+    code.addEventListener("scroll", ()=>{
+      lines.scrollTop = code.scrollTop;
+    });
+
+    window.onload = ()=>{
+      updateLines();
+      runCode();
+    };
+  </script>
+
+</body>
+</html>
